@@ -1,0 +1,6 @@
+{
+  "name": "Easy Linge Kech — Votre avis compte",
+  "description": "Plateforme intelligente de collecte et filtrage d'avis clients pour Easy Linge Kech (Blanchisserie & Pressing à Marrakech). Redirection Google Reviews et assistance directe.",
+  "requestFramePermissions": [],
+  "majorCapabilities": ["MAJOR_CAPABILITY_SERVER_SIDE_GEMINI_API"]
+}
