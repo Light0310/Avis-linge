@@ -1,15 +1,10 @@
-import React, { useState, useEffect } from 'react';
-import { Star, ExternalLink, MessageCircle, Send, CheckCircle2, RotateCcw, Settings, X, Check } from 'lucide-react';
+import React, { useState } from 'react';
+import { Star, ExternalLink, MessageCircle, Send, CheckCircle2, RotateCcw, Instagram, Sparkles } from 'lucide-react';
 
-interface Config {
-  googleReviewUrl: string;
-  whatsappNumber: string;
-  minStarGoogle: number;
-}
-
-const DEFAULT_CONFIG: Config = {
+const CONFIG = {
   googleReviewUrl: 'https://search.google.com/local/writereview?placeid=ChIJ-EasyLingeMarrakechDemo',
-  whatsappNumber: '212661984210',
+  whatsappNumber: '212626385663',
+  instagramUrl: 'https://instagram.com/ezzilinge.ma?vrfl=MTBtb2tqdzJlaXN1OA%3D%3D',
   minStarGoogle: 4,
 };
 
@@ -31,28 +26,6 @@ export default function App() {
   const [clientMessage, setClientMessage] = useState('');
   const [submittedPrivate, setSubmittedPrivate] = useState(false);
 
-  // Owner config modal
-  const [showConfig, setShowConfig] = useState(false);
-  const [config, setConfig] = useState<Config>(() => {
-    try {
-      const saved = localStorage.getItem('el_config');
-      if (saved) return JSON.parse(saved);
-    } catch {
-      // ignore
-    }
-    return DEFAULT_CONFIG;
-  });
-  const [tempConfig, setTempConfig] = useState<Config>(config);
-  const [configSavedToast, setConfigSavedToast] = useState(false);
-
-  useEffect(() => {
-    try {
-      localStorage.setItem('el_config', JSON.stringify(config));
-    } catch {
-      // ignore
-    }
-  }, [config]);
-
   const handleSelectStar = (value: number) => {
     setRating(value);
   };
@@ -67,12 +40,12 @@ export default function App() {
   };
 
   const handleOpenGoogle = () => {
-    const url = config.googleReviewUrl.trim() || 'https://maps.google.com';
+    const url = CONFIG.googleReviewUrl.trim() || 'https://maps.google.com';
     window.open(url, '_blank', 'noopener,noreferrer');
   };
 
   const handleSendWhatsApp = () => {
-    const phone = config.whatsappNumber.replace(/[^0-9]/g, '');
+    const phone = CONFIG.whatsappNumber.replace(/[^0-9]/g, '');
     let text = `Bonjour Easy Linge Kech,\nJe souhaite vous faire part d'une remarque concernant ma commande :`;
     if (clientName.trim()) text += `\nNom : ${clientName.trim()}`;
     if (clientPhone.trim()) text += `\nTél : ${clientPhone.trim()}`;
@@ -86,49 +59,52 @@ export default function App() {
     setSubmittedPrivate(true);
   };
 
-  const handleSaveConfig = (e: React.FormEvent) => {
-    e.preventDefault();
-    setConfig(tempConfig);
-    setConfigSavedToast(true);
-    setTimeout(() => {
-      setConfigSavedToast(false);
-      setShowConfig(false);
-    }, 1000);
-  };
-
   const activeDisplayRating = hoverRating !== null ? hoverRating : (rating || 0);
 
   return (
-    <div className="min-h-screen bg-[#f7f5f0] text-[#1f2937] flex flex-col justify-between items-center p-4 sm:p-6 font-sans">
-      {/* Top spacer */}
-      <div className="w-full flex justify-end max-w-[440px] pt-1">
-        <button
-          type="button"
-          onClick={() => {
-            setTempConfig(config);
-            setShowConfig(true);
-          }}
-          className="text-xs text-[#6b7280] hover:text-[#1b3b2b] p-1.5 rounded-lg transition-colors flex items-center gap-1 cursor-pointer"
-          title="Paramètres des liens"
-        >
-          <Settings className="w-4 h-4" />
-          <span className="text-[11px] font-medium">Réglages</span>
-        </button>
-      </div>
-
+    <div className="min-h-screen bg-[#f7f5f0] text-[#1f2937] flex flex-col justify-center items-center p-4 sm:p-6 font-sans">
       {/* Main Review Card */}
-      <div className="w-full max-w-[440px] bg-white rounded-[22px] px-6 py-8 sm:px-8 sm:py-9 shadow-[0_15px_35px_-5px_rgba(27,59,43,0.08)] text-center transition-all">
+      <div className="w-full max-w-[440px] bg-white rounded-[22px] px-6 py-8 sm:px-8 sm:py-9 shadow-[0_15px_35px_-5px_rgba(27,59,43,0.08)] text-center transition-all my-auto">
         {/* Brand Header */}
         <div className="mb-6">
-          <div className="w-12 h-12 rounded-2xl bg-[#1b3b2b] text-white mx-auto flex items-center justify-center font-bold text-lg mb-3 shadow-sm">
-            EL
+          {/* Professional Laundry & Pressing Brand Icon */}
+          <div className="w-14 h-14 rounded-2xl bg-gradient-to-br from-[#1b3b2b] to-[#12281d] text-white mx-auto flex items-center justify-center mb-3 shadow-md shadow-[#1b3b2b]/15 border border-[#1b3b2b]/10 relative">
+            <svg
+              className="w-7 h-7 text-[#f7f5f0]"
+              viewBox="0 0 24 24"
+              fill="none"
+              stroke="currentColor"
+              strokeWidth="1.8"
+              strokeLinecap="round"
+              strokeLinejoin="round"
+            >
+              {/* Pressing iron silhouette */}
+              <path d="M4 18h16a1 1 0 0 0 1-1l-2-7a2 2 0 0 0-2-1H9a4 4 0 0 0-4 4v4a1 1 0 0 0 1 1z" />
+              <path d="M7 10V6a2 2 0 0 1 2-2h4a2 2 0 0 1 2 2v4" />
+              <circle cx="9" cy="14" r="0.75" fill="currentColor" />
+              <circle cx="12" cy="14" r="0.75" fill="currentColor" />
+              <circle cx="15" cy="14" r="0.75" fill="currentColor" />
+            </svg>
+            <div className="absolute -top-1 -right-1 w-4 h-4 rounded-full bg-[#c1623c] flex items-center justify-center text-white shadow-xs">
+              <Sparkles className="w-2.5 h-2.5" />
+            </div>
           </div>
+
           <h1 className="text-xl sm:text-2xl font-bold text-[#1b3b2b] tracking-tight">
             Easy Linge Kech
           </h1>
           <p className="text-xs text-[#6b7280] mt-0.5">
             Blanchisserie & Pressing • Marrakech
           </p>
+          <a
+            href={CONFIG.instagramUrl}
+            target="_blank"
+            rel="noopener noreferrer"
+            className="inline-flex items-center gap-1.5 text-xs text-[#c1623c] hover:text-[#a94f2b] font-medium mt-1.5 transition-colors"
+          >
+            <Instagram className="w-3.5 h-3.5" />
+            <span>@ezzilinge.ma</span>
+          </a>
         </div>
 
         {/* STEP 1: INITIAL STAR SELECTION */}
@@ -186,7 +162,7 @@ export default function App() {
         )}
 
         {/* STEP 2: POSITIVE BRANCH (4 or 5 STARS) -> GOOGLE REVIEWS */}
-        {rating !== null && rating >= config.minStarGoogle && (
+        {rating !== null && rating >= CONFIG.minStarGoogle && (
           <div className="text-center">
             {/* Star count preview */}
             <div className="flex justify-center items-center gap-1 mb-4">
@@ -211,7 +187,7 @@ export default function App() {
             <button
               type="button"
               onClick={handleOpenGoogle}
-              className="w-full bg-[#1b3b2b] hover:bg-[#142e22] text-white font-bold py-3.5 px-4 rounded-xl text-sm flex items-center justify-center gap-2.5 transition-all shadow-md active:scale-[0.99] cursor-pointer mb-3"
+              className="w-full bg-[#1b3b2b] hover:bg-[#142e22] text-white font-bold py-3.5 px-4 rounded-xl text-sm flex items-center justify-center gap-2.5 transition-all shadow-md active:scale-[0.99] cursor-pointer mb-2.5"
             >
               <div className="w-5 h-5 rounded-full bg-white flex items-center justify-center text-[11px] font-black text-[#4285F4]">
                 G
@@ -219,6 +195,18 @@ export default function App() {
               <span>Laisser un avis sur Google</span>
               <ExternalLink className="w-4 h-4 text-[#d97706]" />
             </button>
+
+            {/* Instagram follow button */}
+            <a
+              href={CONFIG.instagramUrl}
+              target="_blank"
+              rel="noopener noreferrer"
+              className="w-full bg-[#faf5f2] hover:bg-[#faeee8] text-[#1b3b2b] border border-[#e5e7eb] font-semibold py-2.5 px-4 rounded-xl text-xs flex items-center justify-center gap-2 transition-all cursor-pointer mb-2"
+            >
+              <Instagram className="w-4 h-4 text-[#c1623c]" />
+              <span>Rejoignez-nous sur Instagram @ezzilinge.ma</span>
+              <ExternalLink className="w-3.5 h-3.5 text-[#9ca3af]" />
+            </a>
 
             <button
               type="button"
@@ -232,7 +220,7 @@ export default function App() {
         )}
 
         {/* STEP 3: PRIVATE BRANCH (1 TO 3 STARS) -> MANAGEMENT FEEDBACK */}
-        {rating !== null && rating < config.minStarGoogle && (
+        {rating !== null && rating < CONFIG.minStarGoogle && (
           <div className="text-center">
             {/* Star count preview */}
             <div className="flex justify-center items-center gap-1 mb-4">
@@ -365,101 +353,19 @@ export default function App() {
       </div>
 
       {/* Clean Footer */}
-      <footer className="text-center text-[11px] text-[#9ca3af] py-3">
-        Easy Linge Kech • Marrakech
+      <footer className="text-center text-[11px] text-[#9ca3af] py-3 flex items-center justify-center gap-2">
+        <span>Easy Linge Kech • Marrakech</span>
+        <span>•</span>
+        <a
+          href={CONFIG.instagramUrl}
+          target="_blank"
+          rel="noopener noreferrer"
+          className="hover:text-[#c1623c] inline-flex items-center gap-1 transition-colors font-medium text-[#6b7280]"
+        >
+          <Instagram className="w-3 h-3 text-[#c1623c]" />
+          @ezzilinge.ma
+        </a>
       </footer>
-
-      {/* Owner Configuration Modal (Discreet & Practical) */}
-      {showConfig && (
-        <div className="fixed inset-0 bg-black/40 backdrop-blur-xs flex items-center justify-center p-4 z-50">
-          <div className="bg-white rounded-2xl max-w-md w-full p-6 shadow-xl border border-gray-100 relative">
-            <div className="flex items-center justify-between pb-3 mb-4 border-b border-gray-100">
-              <h3 className="text-sm font-bold text-[#1b3b2b]">
-                Configuration de la redirection
-              </h3>
-              <button
-                type="button"
-                onClick={() => setShowConfig(false)}
-                className="text-gray-400 hover:text-gray-600 p-1 rounded-lg"
-              >
-                <X className="w-4 h-4" />
-              </button>
-            </div>
-
-            <form onSubmit={handleSaveConfig} className="space-y-3.5 text-left text-xs">
-              <div>
-                <label className="block font-semibold text-[#374151] mb-1">
-                  Lien direct Google Reviews
-                </label>
-                <input
-                  type="url"
-                  required
-                  value={tempConfig.googleReviewUrl}
-                  onChange={(e) => setTempConfig({ ...tempConfig, googleReviewUrl: e.target.value })}
-                  placeholder="https://search.google.com/local/writereview?placeid=..."
-                  className="w-full px-3 py-2 rounded-xl border border-[#d1d5db] focus:border-[#1b3b2b] outline-none"
-                />
-                <p className="text-[10px] text-[#9ca3af] mt-1">
-                  Lien où atterrit le client lorsqu'il clique sur 4 ou 5 étoiles.
-                </p>
-              </div>
-
-              <div>
-                <label className="block font-semibold text-[#374151] mb-1">
-                  Numéro WhatsApp (avec indicatif 212)
-                </label>
-                <input
-                  type="text"
-                  required
-                  value={tempConfig.whatsappNumber}
-                  onChange={(e) => setTempConfig({ ...tempConfig, whatsappNumber: e.target.value })}
-                  placeholder="212661984210"
-                  className="w-full px-3 py-2 rounded-xl border border-[#d1d5db] focus:border-[#1b3b2b] outline-none font-mono"
-                />
-              </div>
-
-              <div>
-                <label className="block font-semibold text-[#374151] mb-1">
-                  Seuil de redirection Google
-                </label>
-                <select
-                  value={tempConfig.minStarGoogle}
-                  onChange={(e) => setTempConfig({ ...tempConfig, minStarGoogle: Number(e.target.value) })}
-                  className="w-full px-3 py-2 rounded-xl border border-[#d1d5db] focus:border-[#1b3b2b] outline-none bg-white"
-                >
-                  <option value={4}>4 étoiles et plus (4 et 5 vers Google)</option>
-                  <option value={5}>5 étoiles uniquement (Seul 5 vers Google)</option>
-                </select>
-              </div>
-
-              <div className="pt-3 flex items-center justify-between">
-                {configSavedToast ? (
-                  <span className="text-[11px] text-emerald-700 font-bold flex items-center gap-1">
-                    <Check className="w-3.5 h-3.5" /> Enregistré !
-                  </span>
-                ) : (
-                  <span />
-                )}
-                <div className="flex gap-2">
-                  <button
-                    type="button"
-                    onClick={() => setShowConfig(false)}
-                    className="px-3 py-2 rounded-xl bg-gray-100 hover:bg-gray-200 text-gray-700 font-semibold cursor-pointer"
-                  >
-                    Annuler
-                  </button>
-                  <button
-                    type="submit"
-                    className="px-4 py-2 rounded-xl bg-[#1b3b2b] hover:bg-[#142e22] text-white font-bold cursor-pointer"
-                  >
-                    Sauvegarder
-                  </button>
-                </div>
-              </div>
-            </form>
-          </div>
-        </div>
-      )}
     </div>
   );
 }
