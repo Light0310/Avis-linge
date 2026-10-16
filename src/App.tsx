@@ -17,7 +17,7 @@ import {
 import confetti from 'canvas-confetti';
 
 const CONFIG = {
-  googleReviewUrl: 'https://search.google.com/local/writereview?placeid=ChIJ-EasyLingeMarrakechDemo',
+  googleReviewUrl: 'https://search.google.com/local/writereview?placeid=ChIJKdrXAWftrw0R_LdW1xzp9vw',
   whatsappNumber: '212626385663',
   instagramUrl: 'https://instagram.com/ezzilinge.ma?vrfl=MTBtb2tqdzJlaXN1OA%3D%3D',
   minStarGoogle: 4,
